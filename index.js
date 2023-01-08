@@ -7,8 +7,8 @@ dotenv.config();
 // Adresse IP à surveiller
 const ipAddress = process.env.IP_ADDRESS;
 
-// Intervalle de vérification en millisecondes (30 secondes)
-const checkInterval = 30000;
+// Intervalle de vérification en millisecondes (1 minute = 60000 millisecondes)
+const checkInterval = 60000;
 
 // Fonction pour envoyer un e-mail
 async function sendEmail(subject, message) {

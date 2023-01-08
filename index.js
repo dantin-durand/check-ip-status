@@ -113,5 +113,5 @@ async function main() {
 }
 
 // Exécution de la fonction principale toutes les minutes
-// setInterval(main, checkInterval);
-main();
+setInterval(main, checkInterval);
+// main();

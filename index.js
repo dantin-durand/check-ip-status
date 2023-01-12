@@ -6,8 +6,8 @@ dotenv.config();
 
 // Adresse IP à surveiller
 
-// Intervalle de vérification en millisecondes (1 minute = 60000 millisecondes)
-const checkInterval = 60000;
+// Intervalle de vérification en millisecondes (30sec)
+const checkInterval = 30000;
 
 // get formatted date with time
 function getFormattedDate() {
@@ -85,30 +85,38 @@ async function main() {
 
   // Si la connexion est perdue et que l'état actuel est "connecté", envoyer une alerte par e-mail et mettre à jour l'état dans le fichier
   if (!isConnected && currentStatus == "connected") {
-    await sendEmail(
-      "Connexion perdue - [" + getFormattedDate() + "]",
-      "La connexion à l'IP spécifiée a été perdue."
-    );
-    fs.writeFileSync("status.txt", "disconnected");
-    // write in log file
-    fs.appendFileSync(
-      "log.txt",
-      "[" + getFormattedDate() + "] - disconnected\n"
-    );
+    try {
+      await sendEmail(
+        "Connexion perdue - [" + getFormattedDate() + "]",
+        "La connexion à l'IP spécifiée a été perdue."
+      );
+      fs.writeFileSync("status.txt", "disconnected");
+      // write in log file
+      fs.appendFileSync(
+        "log.txt",
+        "[" + getFormattedDate() + "] - disconnected\n"
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   // Si la connexion est rétablie et que l'état actuel est "déconnecté", envoyer une alerte par e-mail et mettre à jour l'état dans le fichier
   if (isConnected && currentStatus == "disconnected") {
-    await sendEmail(
-      "Connexion rétablie - [" + getFormattedDate() + "]",
-      "La connexion à l'IP spécifiée a été rétablie."
-    );
-    fs.writeFileSync("status.txt", "connected");
-    // write in log file
-    fs.appendFileSync(
-      "log.txt",
-      "[" + getFormattedDate() + "] - reconnected\n"
-    );
+    try {
+      await sendEmail(
+        "Connexion rétablie - [" + getFormattedDate() + "]",
+        "La connexion à l'IP spécifiée a été rétablie."
+      );
+      fs.writeFileSync("status.txt", "connected");
+      // write in log file
+      fs.appendFileSync(
+        "log.txt",
+        "[" + getFormattedDate() + "] - reconnected\n"
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

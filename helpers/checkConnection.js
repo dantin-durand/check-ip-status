@@ -6,7 +6,8 @@ async function checkConnection() {
   return new Promise((resolve, reject) => {
     let socket = net.createConnection(
       process.env.IP_PORT,
-      process.env.IP_ADDRESS
+      process.env.IP_ADDRESS,
+      { timeout: 1000 }
     );
     socket.on("connect", () => {
       socket.end();

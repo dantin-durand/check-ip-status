@@ -1,5 +1,6 @@
-require("dotenv").config();
 const fs = require("fs");
+require("dotenv").config();
+const { setIntervalAsync } = require("set-interval-async");
 const { checkConnection } = require("./helpers/checkConnection");
 const { sendReport } = require("./helpers/sendReport");
 
@@ -18,4 +19,4 @@ async function main() {
   }
 }
 
-setInterval(main, checkInterval);
+setIntervalAsync(main, checkInterval);

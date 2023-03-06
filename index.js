@@ -1,5 +1,6 @@
 const fs = require("fs");
 require("dotenv").config();
+const cron = require("node-cron");
 const { checkConnection } = require("./helpers/checkConnection");
 const { sendReport } = require("./helpers/sendReport");
 
@@ -16,8 +17,9 @@ async function main() {
   }
 }
 
-(async () => {
+// toute les 10 minutes
+cron.schedule("*/10 * * * *", async () => {
   console.log("Monitoring started");
   await main();
   console.log("Monitoring ended");
-})();
+});
